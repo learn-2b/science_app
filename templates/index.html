@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق العلوم التفاعلي</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>🌡️🔥 مرحبًا في تطبيق العلوم التفاعلي 🔥🌡️</h1>
+
+    <form method="POST">
+        <label>أدخل درجة الحرارة:</label>
+        <input type="text" name="temperature" required>
+
+        <label>اختر الوحدة:</label>
+        <select name="unit">
+            <option value="Celsius to Fahrenheit">Celsius إلى Fahrenheit</option>
+            <option value="Celsius to Kelvin">Celsius إلى Kelvin</option>
+            <option value="Fahrenheit to Celsius">Fahrenheit إلى Celsius</option>
+            <option value="Fahrenheit to Kelvin">Fahrenheit إلى Kelvin</option>
+        </select>
+
+        <button type="submit">تحويل</button>
+    </form>
+
+    {% if result %}
+        <h2>النتيجة: {{ result }}</h2>
+    {% endif %}
+
+    <h2>🔥 منحنى التسخين التفاعلي 🔥</h2>
+    <div id="graph"></div>
+
+    <script>
+        var graphData = {{ graph_json | safe }};
+        Plotly.newPlot('graph', graphData.data, graphData.layout);
+    </script>
+</body>
+</html>
